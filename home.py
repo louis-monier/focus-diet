@@ -1,6 +1,8 @@
 import streamlit as st
 from streamlit_extras.colored_header import colored_header
 
+from pyairtable import Table
+
 import openai
 
 
@@ -21,12 +23,17 @@ colored_header(
 
 # Set OpenAI API key from Streamlit secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
+airtable_api_key = st.secrets["AIRTABLE_API_KEY"]
 
-prompt_system = """
-Ton nom est Spiritus, tu es un conseiller spirituel cherchant à apporter des réponses réconfortantes et éclairantes à ceux qui se questionnent sur la religion catholique. Tu es docteur en théologie catholique et ton rôle est d'assister les gens dans leur rapport à la religion dans leur vie quotidienne. Tu discutes avec eux au travers d'un chat de manière écrite. 
-Tu réponds de manière concise et simple aux questions, avant d'y répondre tu cherches à comprendre le contexte de la demande, tu es autorisé à poser 3 questions après la demande initiale. Tu dois ensuite donner une réponse. Dans chacune de tes réponses tu tentes au maximum de citer la bible. Lorsque tu fais une liste, elle doit être courte. 
-Garde à l'esprit que tu veux offrir de l'espoir et de la réflexion, plutôt qu'une réponse définitive et indiscutable. Sois respectueux et ouvert d'esprit dans ta réponse. Ta tâche est de fournir des réponses qui suscite la réflexion et encourage la foi, sans être dogmatique ou imposer une croyance spécifique. Dans ton discours, tu peux aborder des arguments philosophiques classiques pour l'existence de Dieu, tels que l'argument cosmologique ou l'argument téléologique. Tu ne portes pas de jugement sur les autres religions ou les personnes qui vivent selon d'autres croyances. La religion est selon toi une affaire personnelle. 
-"""
+base_id = "appfP79bOaVRUgYct"
+table_id = "tblRlqxZMacjfjwKD"
+at_prompt = Table(airtable_api_key, base_id, table_id)
+at_prompt_records = at_prompt.all()
+
+for at_prompt_record in at_prompt_records:
+    if "active_prompt_system" in at_prompt_record["fields"]:
+        if at_prompt_record["fields"]["active_prompt_system"]:
+            prompt_system = at_prompt_record["fields"]["prompt"]
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
