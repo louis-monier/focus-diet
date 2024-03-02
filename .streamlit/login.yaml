@@ -4,15 +4,15 @@ cookie:
   name: some_cookie_name
 credentials:
   usernames:
-    thom:
-      email: tlibs75@gmail.com
-      name: thom
-      password: $2b$12$g70MF44g.9k/BHuyF98GF.sGjvCznxo.DbWgiSrBZLCZ2rd0FUwVS
+    theo:
+      email: tbertranddiet@gmail.com
+      name: theo
+      password: $2b$12$uRvyjJ8tUQyooRk0HZ5y4e9oaQbysIbq3bOSkUpUbhxd/.KR7Tto.
     loulou:
       email: monier.louis@gmail.com
       name: loulou
       password: $2b$12$MjgIiQsvTm9OBEtgmMNu3u6DsZ/AEItD71TK9UOp0hbl/18SPo38q
 preauthorized:
   emails:
-    - tlibs75@gmail.com
+    - tbertranddiet@gmail.com
     - monier.louis@gmail.com

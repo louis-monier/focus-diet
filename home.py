@@ -11,7 +11,7 @@ import fitz
 import yaml
 from yaml.loader import SafeLoader
 
-st.set_page_config(page_title="FinancePro")
+st.set_page_config(page_title="FocusDiet")
 
 # Get the credentials for login
 with open('.streamlit/login.yaml') as file:
@@ -52,8 +52,7 @@ if st.session_state["authentication_status"]:
 
     # Set up the page
     with st.sidebar:
-        st.title("FinancePro")
-        st.markdown("#### Louis Monier & Thomas Libs")
+        st.title("FocusDiet")
         st.divider()
         st.write(f'Welcome *{st.session_state["name"]}*')
         authenticator.logout()
@@ -70,15 +69,15 @@ if st.session_state["authentication_status"]:
         )
 
     # Text input for user to type their instruction
-    user_prompt = st.sidebar.text_area("Type the instructions for the Assistant here:", value=st.session_state.prompt_system, height=200)
+    user_prompt = st.sidebar.text_area("Instructions pour l'assistant:", value=st.session_state.prompt_system, height=200)
 
     # Button to submit the prompt
-    if st.sidebar.button('Submit Instruction'):
+    if st.sidebar.button('Overwrite Instruction'):
         st.session_state.user_instruction = user_prompt  # Save the prompt to session state if needed
-        st.sidebar.success("Instruction updated successfully!")
+        st.sidebar.success("Instruction updated avec succès!")
         
         # Display the instruction (or you can use this prompt in your logic as needed)
-        st.sidebar.markdown("#### Current Assistant Instructions")
+        st.sidebar.markdown("#### Instructions de l'Assistant")
         st.sidebar.write(user_prompt)
         
         st.session_state.assistant = client.beta.assistants.update(
@@ -86,10 +85,10 @@ if st.session_state["authentication_status"]:
             instructions=st.session_state.user_instruction  # Use the instruction from session state
         )
 
-    st.title("FinancePro")
+    st.title("IA & FocusDiet")
 
     # File uploader for PDF
-    uploaded_file = st.file_uploader('Upload your PDF file', type="pdf")
+    uploaded_file = st.file_uploader('Télécharger le plan de suivi diet (format PDF)', type="pdf")
 
     if uploaded_file is not None and "file_processed" not in st.session_state:
         # Determine the file type
@@ -119,7 +118,7 @@ if st.session_state["authentication_status"]:
             file_response = client.files.create(file=file_stream, purpose='assistants')
             st.session_state.file_id = file_response.id
             #print(st.session_state.file_id)
-            st.success("File uploaded successfully to OpenAI!")
+            st.success("Fichier uploadé avec succès vers OpenAI!")
             st.session_state.file_processed = True  # Set the flag indicating file has been processed
 
             # Optional: Display and Download JSON
