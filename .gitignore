@@ -1,6 +1,9 @@
 # Streamlit specific
 .streamlit/secrets.toml
 
+# Other
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
